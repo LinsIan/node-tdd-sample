@@ -7,7 +7,7 @@ describe.only('hw2', () => {
 
   before(async (done) => {
     let userId = "618444968267382";
-    let token = "EAACEdEose0cBAARvaZAoWcNHD8WeTgxgohMI0enyVAAQjaVmH2snfS6Hd9u3hrkrldoi6wZAtLKuPc56ZA3JZBSmYwD3QiP29Ge7zgtliO9CiISS2zm6mJoWqB7l3hUFvjcr49oXzLAmG8lLIpmrhWVkWXZApV5cfPCfIARlpEUqIgx6CKEcTZA9ElznyfGLwZD";
+    let token = "EAACEdEose0cBAJlP7o2lFIHXwunjWMYVAvuvCGLkd8GkBIHqoRowECrZByeYxIz4dheceT7bZBxZBlvMukZAtjtGbJXUfCj1YZCTgU77LwMy4gmz8dusod6AK2BhUZBe0XjqV2kKYXcNUBhnkkjDupAD8YAETPZB3LTpj9lWiQruLVzOmDhAypuSVlq4aVozQMZD";
     facebookHelper = new FacebookHelper({userId, token});
     console.log(facebookHelper);
     try{
@@ -46,6 +46,27 @@ describe.only('hw2', () => {
       //檢查是否一樣
 
         fb_friends.length.should.be.eq(friends.length);
+
+
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it("將其中一個 friend 更新其 email 欄位為 hellojs@trunk.studio", async (done) => {
+    try {
+      let f = await model.User.findOne({
+        where:{
+          name:friends[1].name
+        }
+});
+      console.log("要更改的人的資料",f.name,f.email,f.id);
+      f.email = 'hellojs@trunk.studio';
+      await f.save();
+
+      f.email.should.be.eq('hellojs@trunk.studio');
+
 
 
       done();
