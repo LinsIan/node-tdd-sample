@@ -74,4 +74,31 @@ describe.only('hw2', () => {
       done(e);
     }
   });
+
+  it("刪除一位 friend", async (done) => {
+    try {
+      let f = await model.User.findOne({
+        where:{
+          name:friends[1].name
+        }
+      });
+      console.log("要刪除的人的資料",f.name,f.email,f.id);
+      await f.destroy();
+
+      let check = await model.User.findOne({//檢查是否已經刪除
+        where:{
+          name:friends[1].name
+        }
+      });
+
+      (check == null).should.be.true;
+
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+
+
 });
