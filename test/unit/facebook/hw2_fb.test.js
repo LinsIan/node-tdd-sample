@@ -1,6 +1,6 @@
 import FacebookHelper from '../../../src/facebook/helper.js'
 import task1_initModel from '../../../src/database/task1';
-describe('facebook-helper', () => {
+describe.only('hw2', () => {
   let facebookHelper = null;
   let friends = [];
   let model = null;
@@ -18,7 +18,7 @@ describe('facebook-helper', () => {
   });
 
 
-  it.only("get friends list and save", async (done) => {
+  it("get friends list and save", async (done) => {
     try {
       friends = await facebookHelper.getFriends();
       console.log("friends", friends);
@@ -38,13 +38,16 @@ describe('facebook-helper', () => {
     }
   });
 
-  it.skip("publish post", async (done) => {
+  it("原本用 api 取得 friends list 改為透過查詢資料庫的方式", async (done) => {
     try {
-      let post = {
-        message: 'test facebook post api'
-      }
-      let result = await facebookHelper.publishPost(post);
-      console.log("result", result);
+      let fb_friends = await model.User.findAll();
+      console.log("取得資料庫內的朋友清單");
+
+      //檢查是否一樣
+
+        fb_friends.length.should.be.eq(friends.length);
+
+
       done();
     } catch (e) {
       done(e);
