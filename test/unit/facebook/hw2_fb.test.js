@@ -11,7 +11,7 @@ describe('facebook-helper', () => {
     done();
   });
 
-  it("get friends list", async (done) => {
+  it("get friends list and save", async (done) => {
     try {
       let friends = await facebookHelper.getFriends();
       console.log("friends", friends);
